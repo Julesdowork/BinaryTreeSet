@@ -15,5 +15,13 @@ class BinaryTreeSetTest
 		set.add(i);
 		assertEquals(6, iter.next());
 	}
+	
+	@Test
+	void test02EmptyHasNext()
+	{
+		BinaryTreeSet set = new BinaryTreeSet();
+		Iterator iter = set.iterator();
+		assertEquals(false, iter.hasNext());
+	}
 
 }

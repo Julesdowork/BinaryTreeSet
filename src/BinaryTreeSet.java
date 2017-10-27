@@ -55,7 +55,7 @@ public class BinaryTreeSet
 		return new BinaryTreeSetIterator();
 	}
 	
-	static class Node
+	class Node implements Comparable
 	{
 		public Comparable data;
 		public Node parent;
@@ -80,6 +80,15 @@ public class BinaryTreeSet
 				if (right == null) right = newNode;
 				else right.addNode(newNode);
 			}
+		}
+		
+		public int compareTo(Object otherObject)
+		{
+			if (otherObject == null) return -2;
+			if (otherObject.getClass() != getClass()) return -2;
+			Node other = (Node) otherObject;
+			
+			return data.compareTo(other.data);
 		}
 		
 		/**
@@ -112,22 +121,25 @@ public class BinaryTreeSet
 		{
 			if (current == null)
 				return root != null;
+			else if (current.right != null)
+				return true;
 			else
-				return !stack.isEmpty();
+				return false;
 		}
 		
 		public Comparable next()
 		{
 			if (!hasNext())
-				throw new NoSuchElementException();
-			// Pop current node from stack and store it in previous
-			previous = stack.pop();
-			
+				throw new NoSuchElementException();			
 			
 			if (current == null)
 				current = root;
 			else
+			{
+				// Pop current node from stack and store it in previous
+				// previous = stack.pop();
 				current = current.left;
+			}
 			
 			stack.push(current);
 			return current.data;
